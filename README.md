@@ -26,7 +26,7 @@
 
 ## Лицензия
 
-Смотрите раздел [Licence](https://github.com/Fnska/gui_apps/blob/master/LICENSE/)
+Смотрите раздел [License](https://github.com/Fnska/gui_apps/blob/master/LICENSE/)
 
 ## Содействие
 1. Fork репозиторий!
