@@ -10,12 +10,11 @@ from pypylon import pylon, genicam
 
 from ui import main
 
-# os.environ["PYLON_CAMEMU"] = "1"
+os.environ["PYLON_CAMEMU"] = "1"
 count = 0
 
 
 class MyThread(QThread):
-
     def calculation(self, grab_result):
         image = self.converter.Convert(grab_result)
         img = image.GetArray()
@@ -30,11 +29,11 @@ class MyThread(QThread):
                                f'Value min: {v_min} \n'
                                f'Value max: {v_max} \n'
                                f'Area: {area} \n'
-                               f'Exposure/35: {self.exposure_slider.value()} \n'
+                               f'Exposure: {self.exposure_slider.value()} \n'
                                f'Gain: {self.gain_slider.value()}')
 
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        thresh_img_gray = cv2.inRange(img_gray, v_min, v_max)  # TODO: не HardCode!
+        thresh_img_gray = cv2.inRange(img_gray, v_min, v_max)
 
         img_bgr = cv2.cvtColor(thresh_img_gray, cv2.COLOR_GRAY2BGR)
 
@@ -46,6 +45,9 @@ class MyThread(QThread):
         Функция последовательной отрисовки изображения
         """
         grab_result = self.camera.RetrieveResult(5000, pylon.TimeoutHandling_ThrowException)
+        self.camera.GainRaw = self.gain_slider.value()
+        self.camera.ExposureTimeAbs.SetValue(self.exposure_slider.value())
+
         if grab_result.GrabSucceeded():
             contours, hierarchy, img_bgr, area = self.calculation(grab_result)
             for cnt in contours:
@@ -75,8 +77,7 @@ class MyThread(QThread):
         self.image_label.setPixmap(QPixmap.fromImage(img_qt))
 
     def __init__(self, info_label, image_label, value_min_slider, value_max_slider, area_slider, exposure_slider,
-                 gain_slider, *args,
-                 **kwargs):
+                 gain_slider, *args, **kwargs):
         QThread.__init__(self, *args, **kwargs)
 
         # Инициализируем слайдеры для треда-обработчика
@@ -106,15 +107,14 @@ class MyThread(QThread):
                 break
 
         # Устанавливаем дефолтные значения для экспозиции
-        self.exposure_slider.setMinimum(self.camera.ExposureTimeAbs.Min / 35)
-        self.exposure_slider.setMaximum(self.camera.ExposureTimeAbs.Max / 35)
-        self.exposure_slider.setSliderPosition(
-            int((self.camera.ExposureTimeAbs.Min / 35 + self.camera.ExposureTimeAbs.Max / 35) / 2))
+        self.exposure_slider.setMinimum(self.camera.ExposureTimeAbs.Min)
+        self.exposure_slider.setMaximum(self.camera.ExposureTimeAbs.Max)
+        self.exposure_slider.setSliderPosition(self.camera.ExposureTimeAbs.Min)
 
         # Устанавливаем дефолтные значения для усиления
         self.gain_slider.setMinimum(self.camera.GainRaw.Min)
         self.gain_slider.setMaximum(self.camera.GainRaw.Max)
-        self.gain_slider.setSliderPosition(int((self.camera.GainRaw.Min + self.camera.GainRaw.Max) / 2))
+        self.gain_slider.setSliderPosition(self.camera.GainRaw.Min)
 
         # Инициализируем конвертор формата изображения и сам формат
         self.converter = pylon.ImageFormatConverter()
@@ -126,15 +126,18 @@ class MyThread(QThread):
         # TODO: вернуть!!! self.camera.BinningVertical = 2  # уменьшение размеров картинки по вертикали
         self.camera.StartGrabbing(pylon.GrabStrategy_LatestImageOnly)
 
-        # Устанавливаем таймер обновления картинки
-        self.timer = QTimer()
-        self.timer.moveToThread(self)
-        self.timer.timeout.connect(self.display_video_stream)
+        # # Устанавливаем таймер обновления картинки
+        # self.timer = QTimer()
+        # self.timer.moveToThread(self)
+        # self.timer.timeout.connect(self.display_video_stream)
 
     def run(self):
-        self.timer.start(100)
-        loop = QEventLoop()
-        loop.exec_()
+        while self.camera.IsGrabbing():
+            self.display_video_stream()
+
+            # self.timer.start(100)
+            # loop = QEventLoop()
+            # loop.exec_()
 
 
 class MyQtApp(main.Ui_MainWindow, QtWidgets.QMainWindow):
