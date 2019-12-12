@@ -1,50 +1,16 @@
-import os
-import sys
 import time
 
 import cv2
-from PySide2 import QtWidgets
-from PySide2.QtCore import QTimer, QThread, QEventLoop
-from PySide2.QtGui import QPixmap, QImage
+from PySide2.QtCore import QThread
+from PySide2.QtGui import QImage, QPixmap
 from pypylon import pylon, genicam
 
-from ui import main
-
-os.environ["PYLON_CAMEMU"] = "1"
-count = 0
+from v2.app import MyQtApp
 
 
-class MyQtApp(main.Ui_MainWindow, QtWidgets.QMainWindow):
-    def __init__(self):
-        super(MyQtApp, self).__init__()
-        self.setupUi(self)
-        self.printScreenOverlayButton.clicked.connect(self.save_print_screen)
-
-    def save_print_screen(self):
-        pass
-
-
-class MyThread(QThread):
-    def __init__(self, info_label, image_label, value_min_slider, value_max_slider, area_slider, exposure_slider,
-                 gain_slider, *args, **kwargs):
-        QThread.__init__(self, *args, **kwargs)
-
-        # Инициализируем слайдеры для треда-обработчика
-        self.value_min_slider = value_min_slider
-        self.value_max_slider = value_max_slider
-        self.area_slider = area_slider
-        self.exposure_slider = exposure_slider
-        self.gain_slider = gain_slider
-
-        # Инициализируем лейблы для треда-обработчика
-        self.infoLabel = info_label
-        self.image_label = image_label
-
-        self.args = args
-        self.kwargs = kwargs
-
-        self.camera = None
-
+class ImageThread(QThread, MyQtApp):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         while True:
             try:
                 self.camera = pylon.InstantCamera(
@@ -54,31 +20,22 @@ class MyThread(QThread):
                 time.sleep(3)
             else:
                 break
-
         # Устанавливаем дефолтные значения для экспозиции
         self.exposure_slider.setMinimum(self.camera.ExposureTimeAbs.Min)
         self.exposure_slider.setMaximum(self.camera.ExposureTimeAbs.Max)
         self.exposure_slider.setSliderPosition(self.camera.ExposureTimeAbs.Min)
-
         # Устанавливаем дефолтные значения для усиления
         self.gain_slider.setMinimum(self.camera.GainRaw.Min)
         self.gain_slider.setMaximum(self.camera.GainRaw.Max)
         self.gain_slider.setSliderPosition(self.camera.GainRaw.Min)
-
         # Инициализируем конвертор формата изображения и сам формат
         self.converter = pylon.ImageFormatConverter()
         self.converter.OutputPixelFormat = pylon.PixelType_BGR8packed
         self.converter.OutputBitAlignment = pylon.OutputBitAlignment_MsbAligned
-
         self.camera.Open()
         # TODO: вернуть!!! self.camera.BinningHorizontal = 2  # уменьшение размеров картинки по горизонтали
         # TODO: вернуть!!! self.camera.BinningVertical = 2  # уменьшение размеров картинки по вертикали
         self.camera.StartGrabbing(pylon.GrabStrategy_LatestImageOnly)
-
-        # # Устанавливаем таймер обновления картинки
-        # self.timer = QTimer()
-        # self.timer.moveToThread(self)
-        # self.timer.timeout.connect(self.display_video_stream)
 
     def image_calculation(self, grab_result):
         image = self.converter.Convert(grab_result)
@@ -144,17 +101,3 @@ class MyThread(QThread):
     def run(self):
         while self.camera.IsGrabbing():
             self.display_video_stream()
-            # self.timer.start(100)
-            # loop = QEventLoop()
-            # loop.exec_()
-
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    qt_app = MyQtApp()
-    th = MyThread(qt_app.info_label, qt_app.image_label, qt_app.value_min_slider, qt_app.value_max_slider,
-                  qt_app.area_slider, qt_app.exposure_slider, qt_app.gain_slider)
-
-    th.start()
-    qt_app.show()
-    app.exec_()
