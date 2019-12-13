@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>979</width>
-    <height>772</height>
+    <height>792</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,8 +32,14 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>800</width>
-            <height>600</height>
+            <width>648</width>
+            <height>486</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>1296</width>
+            <height>972</height>
            </size>
           </property>
           <property name="font">
@@ -304,7 +310,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="ninty_percent_radio_button">
+         <widget class="QRadioButton" name="ninety_percent_radio_button">
           <property name="font">
            <font>
             <pointsize>14</pointsize>

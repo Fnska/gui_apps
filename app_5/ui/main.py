@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'main.ui',
 # licensing of 'main.ui' applies.
 #
-# Created: Mon Dec  9 20:05:58 2019
+# Created: Fri Dec 13 19:50:42 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(979, 772)
+        MainWindow.resize(979, 792)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -29,7 +29,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.image_label.sizePolicy().hasHeightForWidth())
         self.image_label.setSizePolicy(sizePolicy)
-        self.image_label.setMinimumSize(QtCore.QSize(800, 600))
+        self.image_label.setMinimumSize(QtCore.QSize(648, 486))
+        self.image_label.setMaximumSize(QtCore.QSize(1296, 972))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.image_label.setFont(font)
@@ -175,12 +176,12 @@ class Ui_MainWindow(object):
         self.exponent_radio_button.setFont(font)
         self.exponent_radio_button.setObjectName("exponent_radio_button")
         self.verticalLayout_6.addWidget(self.exponent_radio_button)
-        self.ninty_percent_radio_button = QtWidgets.QRadioButton(self.centralwidget)
+        self.ninety_percent_radio_button = QtWidgets.QRadioButton(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.ninty_percent_radio_button.setFont(font)
-        self.ninty_percent_radio_button.setObjectName("ninty_percent_radio_button")
-        self.verticalLayout_6.addWidget(self.ninty_percent_radio_button)
+        self.ninety_percent_radio_button.setFont(font)
+        self.ninety_percent_radio_button.setObjectName("ninety_percent_radio_button")
+        self.verticalLayout_6.addWidget(self.ninety_percent_radio_button)
         self.off_button = QtWidgets.QRadioButton(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -227,7 +228,7 @@ class Ui_MainWindow(object):
         self.printScreenButton.setText(QtWidgets.QApplication.translate("MainWindow", "PrtScrn", None, -1))
         self.half_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "1/2", None, -1))
         self.exponent_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "Exp", None, -1))
-        self.ninty_percent_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "90%", None, -1))
+        self.ninety_percent_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "90%", None, -1))
         self.off_button.setText(QtWidgets.QApplication.translate("MainWindow", "Off", None, -1))
         self.menuFile.setTitle(QtWidgets.QApplication.translate("MainWindow", "File", None, -1))
         self.actionSave_with_overlay.setText(QtWidgets.QApplication.translate("MainWindow", "Save with overlay as", None, -1))

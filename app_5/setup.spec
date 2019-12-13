@@ -9,7 +9,7 @@ pylon_dlls = [(str(dll), '.') for dll in pypylon_dir.glob('*.dll')]
 
 
 a = Analysis(['app.py'],
-             pathex=['D:\\Андрей\\загрузки Chrome\\Python\\gui_apps\\app_4\\exe'],
+             pathex=['D:\\Андрей\\загрузки Chrome\\Python\\gui_apps\\app_5\\exe'],
              binaries=pylon_dlls,
              datas=[],
              hiddenimports=[],
