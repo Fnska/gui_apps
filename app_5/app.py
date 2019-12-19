@@ -29,8 +29,6 @@ class MyQtApp(main.Ui_MainWindow, QtWidgets.QMainWindow):
             else:
                 break
 
-
-
         # Инициализируем конвертор формата изображения и сам формат
         self.converter = pylon.ImageFormatConverter()
         self.converter.OutputPixelFormat = pylon.PixelType_BGR8packed

@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main.ui',
-# licensing of 'main.ui' applies.
+# Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Fri Dec 13 19:50:42 2019
-#      by: pyside2-uic  running on PySide2 5.12.3
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PySide2 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -77,7 +76,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.area_slider.sizePolicy().hasHeightForWidth())
         self.area_slider.setSizePolicy(sizePolicy)
-        self.area_slider.setMinimum(10000)
+        self.area_slider.setMinimum(10)
         self.area_slider.setMaximum(5000000)
         self.area_slider.setProperty("value", 250000)
         self.area_slider.setOrientation(QtCore.Qt.Horizontal)
@@ -126,7 +125,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addLayout(self.formLayout)
         self.verticalLayout.addLayout(self.verticalLayout_3)
         self.horizontalLayout.addLayout(self.verticalLayout)
-        spacerItem = QtWidgets.QSpacerItem(80, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 0, QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -191,6 +190,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.off_button)
         self.verticalLayout_2.addLayout(self.verticalLayout_6)
         self.horizontalLayout.addLayout(self.verticalLayout_2)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 0, QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 979, 21))
@@ -211,27 +212,37 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.actionQuit, QtCore.SIGNAL("triggered()"), MainWindow.close)
+        self.actionQuit.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
-        self.image_label.setText(QtWidgets.QApplication.translate("MainWindow", "No device available", None, -1))
-        self.valueMinLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Value min", None, -1))
-        self.valueMaxLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Value max", None, -1))
-        self.areaLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Area", None, -1))
-        self.exposureLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Exposure", None, -1))
-        self.gainLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Gain", None, -1))
-        self.info_label.setText(QtWidgets.QApplication.translate("MainWindow", "Info", None, -1))
-        self.radius_label.setText(QtWidgets.QApplication.translate("MainWindow", "Radius", None, -1))
-        self.printScreenOverlayButton.setText(QtWidgets.QApplication.translate("MainWindow", "PrtScrnOver", None, -1))
-        self.printScreenButton.setText(QtWidgets.QApplication.translate("MainWindow", "PrtScrn", None, -1))
-        self.half_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "1/2", None, -1))
-        self.exponent_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "Exp", None, -1))
-        self.ninety_percent_radio_button.setText(QtWidgets.QApplication.translate("MainWindow", "90%", None, -1))
-        self.off_button.setText(QtWidgets.QApplication.translate("MainWindow", "Off", None, -1))
-        self.menuFile.setTitle(QtWidgets.QApplication.translate("MainWindow", "File", None, -1))
-        self.actionSave_with_overlay.setText(QtWidgets.QApplication.translate("MainWindow", "Save with overlay as", None, -1))
-        self.actionSave_without_overlay.setText(QtWidgets.QApplication.translate("MainWindow", "Save without overlay as", None, -1))
-        self.actionQuit.setText(QtWidgets.QApplication.translate("MainWindow", "Quit", None, -1))
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.image_label.setText(_translate("MainWindow", "No device available"))
+        self.valueMinLabel.setText(_translate("MainWindow", "Value min"))
+        self.valueMaxLabel.setText(_translate("MainWindow", "Value max"))
+        self.areaLabel.setText(_translate("MainWindow", "Area"))
+        self.exposureLabel.setText(_translate("MainWindow", "Exposure"))
+        self.gainLabel.setText(_translate("MainWindow", "Gain"))
+        self.info_label.setText(_translate("MainWindow", "Info"))
+        self.radius_label.setText(_translate("MainWindow", "Radius"))
+        self.printScreenOverlayButton.setText(_translate("MainWindow", "PrtScrnOver"))
+        self.printScreenButton.setText(_translate("MainWindow", "PrtScrn"))
+        self.half_radio_button.setText(_translate("MainWindow", "1/2"))
+        self.exponent_radio_button.setText(_translate("MainWindow", "Exp"))
+        self.ninety_percent_radio_button.setText(_translate("MainWindow", "90%"))
+        self.off_button.setText(_translate("MainWindow", "Off"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.actionSave_with_overlay.setText(_translate("MainWindow", "Save with overlay as"))
+        self.actionSave_without_overlay.setText(_translate("MainWindow", "Save without overlay as"))
+        self.actionQuit.setText(_translate("MainWindow", "Quit"))
 
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
